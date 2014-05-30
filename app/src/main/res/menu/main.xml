@@ -3,7 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="in.junaidbabu.MainActivity" >
     <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:title="Recommended video activity"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_videoview"
+    android:title="Video View Activity"
+    android:orderInCategory="100"
+    app:showAsAction="never" />
+
+    <item android:id="@+id/action_videoview2"
+        android:title="Video View Activity2"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>

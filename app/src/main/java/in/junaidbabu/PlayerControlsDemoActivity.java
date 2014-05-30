@@ -33,7 +33,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayer.ErrorReason;
 import com.google.android.youtube.player.YouTubePlayer.PlaybackEventListener;
@@ -73,13 +75,14 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
 
     private static final String KEY_CURRENTLY_SELECTED_ID = "currentlySelectedId";
 
-    private YouTubePlayerView youTubePlayerView;
+    private YouTubePlayerView youTubePlayerView, youTubePlayerView2;
     private YouTubePlayer player;
     private TextView stateText;
     private ArrayAdapter<ListEntry> videoAdapter;
     private Spinner videoChooser;
     private Button playButton;
     private Button pauseButton;
+    private Button reloadButton;
     private EditText skipTo;
     private TextView eventLog;
     private StringBuilder logString;
@@ -103,6 +106,8 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
 
         youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtube_view);
 
+        youTubePlayerView2 = (YouTubePlayerView) findViewById(R.id.youtube_view2);
+
         new GetUserInfo().execute(url_user+ACCESS_TOKEN);
         new GetUserReco().execute(url_recommendations+ACCESS_TOKEN);
 
@@ -111,6 +116,7 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
         videoChooser = (Spinner) findViewById(R.id.video_chooser);
         playButton = (Button) findViewById(R.id.play_button);
         pauseButton = (Button) findViewById(R.id.pause_button);
+        reloadButton = (Button) findViewById(R.id.reload_button);
         skipTo = (EditText) findViewById(R.id.skip_to_text);
         eventLog = (TextView) findViewById(R.id.event_log);
 
@@ -127,9 +133,51 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
 
         playButton.setOnClickListener(this);
         pauseButton.setOnClickListener(this);
+        reloadButton.setOnClickListener(this);
         skipTo.setOnEditorActionListener(this);
 
-        youTubePlayerView.initialize(DeveloperKey.DEVELOPER_KEY, this);
+
+       // youTubePlayerView2.initialize(DeveloperKey.DEVELOPER_KEY, this);
+        PlayerControlsDemoActivity.this.runOnUiThread(new Runnable(){
+            public void run(){
+                Log.d("UI thread", "I am the UI thread");
+                Toast.makeText(PlayerControlsDemoActivity.this, "Hola", Toast.LENGTH_SHORT).show();
+                youTubePlayerView.initialize(DeveloperKey.DEVELOPER_KEY, new YouTubePlayer.OnInitializedListener() {
+                    @Override
+                    public void onInitializationSuccess(YouTubePlayer.Provider provider1, YouTubePlayer player1, boolean restored1) {
+                        if (!restored1) {
+                            player1.cueVideo("Daa38ruXHxE");
+                        }
+                    }
+
+                    @Override
+                    public void onInitializationFailure(YouTubePlayer.Provider provider1, YouTubeInitializationResult result1) {
+                    }
+                });
+                //youTubePlayerView.initialize(DeveloperKey.DEVELOPER_KEY, PlayerControlsDemoActivity.this);
+            }
+        });
+
+        PlayerControlsDemoActivity.this.runOnUiThread(new Runnable(){
+            public void run(){
+                Log.d("UI thread", "I am the UI thread");
+                Toast.makeText(PlayerControlsDemoActivity.this, "Hola2", Toast.LENGTH_SHORT).show();
+                youTubePlayerView2.initialize(DeveloperKey.DEVELOPER_KEY, new YouTubePlayer.OnInitializedListener() {
+
+                    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean restored) {
+
+                        if (!restored) {
+                            player.loadVideo("ctQAPiojDKE");
+                        }
+                    }
+                    @Override
+                    public void onInitializationFailure(YouTubePlayer.Provider provider1, YouTubeInitializationResult result1) {
+                    }
+                });
+            }
+        });
+
+
 
         playlistEventListener = new MyPlaylistEventListener();
         playerStateChangeListener = new MyPlayerStateChangeListener();
@@ -186,6 +234,9 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
             player.play();
         } else if (v == pauseButton) {
             player.pause();
+        } else if(v == reloadButton){
+            Toast.makeText(this, "Refreshing recommendation list", Toast.LENGTH_SHORT).show();
+            new GetUserReco().execute(url_recommendations+ACCESS_TOKEN);
         }
     }
 
@@ -299,6 +350,7 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
             playbackState = "PLAYING";
             updateText();
             log("\tPLAYING " + getTimesText());
+
         }
 
         @Override
@@ -313,6 +365,7 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
             playbackState = "STOPPED";
             updateText();
             log("\tSTOPPED");
+            //player.play();
         }
 
         @Override
@@ -380,9 +433,14 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
                 // When this error occurs the player is released and can no longer be used.
                 player = null;
                 setControlsEnabled(false);
+
+
             }
             updateText();
             log(playerState);
+
+            currentlySelectedPosition++;
+            playVideoAtSelection();
         }
 
     }
@@ -423,7 +481,7 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
                     username.setText("Logged in as " + profileData.getJSONObject("entry").getJSONObject("title").getString("$t"));
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+               // e.printStackTrace();
             }
 
             return null;
@@ -468,6 +526,7 @@ public class PlayerControlsDemoActivity extends YouTubeFailureRecoveryActivity i
                 videoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 videoChooser.setOnItemSelectedListener(PlayerControlsDemoActivity.this);
                 videoChooser.setAdapter(videoAdapter);
+                currentlySelectedPosition=0;
             } catch (JSONException e) {
                 e.printStackTrace();
             }

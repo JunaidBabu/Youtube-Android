@@ -28,10 +28,18 @@
       android:gravity="center_horizontal"
       android:singleLine="true"/>
 
-  <com.google.android.youtube.player.YouTubePlayerView
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/youtube_view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <com.google.android.youtube.player.YouTubePlayerView
       android:id="@+id/youtube_view"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"/>
+
+
 
   <LinearLayout
       android:layout_width="match_parent"
