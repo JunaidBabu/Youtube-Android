@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import in.junaidbabu.MainActivity;
-import in.junaidbabu.PlayerControlsDemoActivity;
+import in.junaidbabu.MainVideoActivity;
 
 /**
  * Display personalized greeting. This class contains boilerplate code to
@@ -91,7 +91,7 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void> {
             SharedPreferences.Editor editor = example.edit();
             editor.putString("token", token);
             editor.commit();
-            mActivity.startActivity(new Intent(mActivity, PlayerControlsDemoActivity.class));
+            mActivity.startActivity(new Intent(mActivity, MainVideoActivity.class));
             mActivity.finish();
 
         }catch (Exception e){

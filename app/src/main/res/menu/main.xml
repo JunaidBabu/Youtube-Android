@@ -15,4 +15,7 @@
         android:title="Video View Activity2"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/action_webview"
+        android:title="WebView"
+        />
 </menu>

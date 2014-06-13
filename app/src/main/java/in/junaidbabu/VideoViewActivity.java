@@ -2,10 +2,13 @@ package in.junaidbabu;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -33,26 +36,26 @@ public class VideoViewActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_view);
-        et = (EditText) findViewById(R.id.editText);
-        new YouTubePageStreamUriGetter().execute("https://www.youtube.com/watch?v=GXpza6Ukwyc");
+//        et = (EditText) findViewById(R.id.editText);
+//        new YouTubePageStreamUriGetter().execute("https://www.youtube.com/watch?v=GXpza6Ukwyc");
 
-//        VideoView videoView =(VideoView)findViewById(R.id.videoView);
-//        MediaController mediaController= new MediaController(this);
-//        mediaController.setAnchorView(videoView);
-//        Uri uri=Uri.parse("https://r3---sn-a5m7zu7d.googlevideo.com/videoplayback?expire=1401355353&id=o-ANk8U9k96FxmzTyHl8rNxwfJButRPjnirbcAuAbVaaAG&sparams=expire,id,ip,ipbits,itag,ratebypass,requiressl,source,upn&requiressl=yes&ip=182.171.224.146&sver=3&fexp=3300095,3300115,3300133,3300137,3312153,3312169,913434,916601,917000,919514,923341,927614,941356,945823&source=youtube&key=cms1&itag=100&signature=50150199AE8FA5562F1729FFA3B351FC74FB3E15.748C86893E4F7696E8A6218E93193680F72ED1C1&ratebypass=yes&ipbits=0&upn=Xqmx_A6KqqI&req_id=3fb29a3f5f528ad6&redirect_counter=2&cms_redirect=yes&ms=tsu&mt=1401337031&mv=m&mws=yes");
-//        videoView.setMediaController(mediaController);
-//        videoView.setVideoURI(uri);
-//        videoView.requestFocus();
-//
-//        videoView.start();
-//
-//
+        VideoView videoView =(VideoView)findViewById(R.id.videoView);
+        MediaController mediaController= new MediaController(this);
+        mediaController.setAnchorView(videoView);
+        //Uri uri=Uri.parse("https://r3---sn-a5m7zu7d.googlevideo.com/videoplayback?expire=1401355353&id=o-ANk8U9k96FxmzTyHl8rNxwfJButRPjnirbcAuAbVaaAG&sparams=expire,id,ip,ipbits,itag,ratebypass,requiressl,source,upn&requiressl=yes&ip=182.171.224.146&sver=3&fexp=3300095,3300115,3300133,3300137,3312153,3312169,913434,916601,917000,919514,923341,927614,941356,945823&source=youtube&key=cms1&itag=100&signature=50150199AE8FA5562F1729FFA3B351FC74FB3E15.748C86893E4F7696E8A6218E93193680F72ED1C1&ratebypass=yes&ipbits=0&upn=Xqmx_A6KqqI&req_id=3fb29a3f5f528ad6&redirect_counter=2&cms_redirect=yes&ms=tsu&mt=1401337031&mv=m&mws=yes");
+        Uri uri=Uri.parse("https://r3---sn-nvoxu-ioqz.googlevideo.com/videoplayback?mws=yes&ipbits=0&fexp=904724%2C916611%2C930008%2C934026%2C938408&mv=m&sparams=gcr%2Cid%2Cip%2Cipbits%2Citag%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&gcr=jp&source=youtube&ip=182.171.224.146&ms=au&requiressl=yes&ratebypass=yes&mt=1402531734&sver=3&itag=22&id=o-AA0QN2M7pxzNc2cFRPpjWLphoqGskp2flIIzfJFCV_or&expire=1402557825&upn=bnVPsZaA7tY&key=yt5&signature=399BD923B60B39A033B45A622D5B97FA94565A62.3241E4CE4F2E2EECF9C738CD916E96284EC84367");
+        videoView.setMediaController(mediaController);
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+
+        videoView.start();
+
+        new YouTubePageStreamUriGetter().execute("https://www.youtube.com/watch?v=4GuqB1BQVr4");
 
     }
 
 
-
-
+    
 
     class Meta {
         public String num;
@@ -109,15 +112,15 @@ public class VideoViewActivity extends Activity {
         }
         in.close();
         html = str.toString();
-        //VideoViewActivity.this.et.setText(html);
+
         // Parse the HTML response and extract the streaming URIs
         if (html.contains("verify-age-thumb")) {
-            Log.w(TAG, "YouTube is asking for age verification. We can't handle that sorry.");
+            Log.w("","YouTube is asking for age verification. We can't handle that sorry.");
             return null;
         }
-        Log.e(TAG, Integer.toString(html.length()));
+
         if (html.contains("das_captcha")) {
-            Log.w(TAG, "Captcha found, please try with different IP address.");
+            Log.w("", "Captcha found, please try with different IP address.");
             return null;
         }
 
@@ -130,7 +133,7 @@ public class VideoViewActivity extends Activity {
         }
 
         if (matches.size() != 1) {
-            Log.w(TAG, "Found zero or too many stream maps.");
+            Log.w("","Found zero or too many stream maps.");
             return null;
         }
 
@@ -167,7 +170,7 @@ public class VideoViewActivity extends Activity {
         }
 
         if (foundArray.size() == 0) {
-            Log.w(TAG, "Couldn't find any URLs and corresponding signatures");
+            Log.w("w", "Couldn't find any URLs and corresponding signatures");
             return null;
         }
 
@@ -196,7 +199,7 @@ public class VideoViewActivity extends Activity {
                 Video newVideo = new Video(meta.ext, meta.type,
                         foundArray.get(format));
                 videos.add(newVideo);
-                Log.d(TAG, "YouTube Video streaming details: ext:" + newVideo.ext
+                Log.d("d", "YouTube Video streaming details: ext:" + newVideo.ext
                         + ", type:" + newVideo.type + ", url:" + newVideo.url);
             }
         }
@@ -206,7 +209,6 @@ public class VideoViewActivity extends Activity {
 
     private class YouTubePageStreamUriGetter extends
             AsyncTask<String, String, String> {
-
         ProgressDialog progressDialog;
 
         @Override
@@ -219,7 +221,6 @@ public class VideoViewActivity extends Activity {
         @Override
         protected String doInBackground(String... params) {
             String url = params[0];
-            Log.i(TAG, "we are in the background. How cool is that?");
             try {
                 ArrayList<Video> videos = getStreamingUrisFromYouTubePage(url);
                 if (videos != null && !videos.isEmpty()) {
@@ -262,13 +263,13 @@ public class VideoViewActivity extends Activity {
                             }
                         }
                     }
-                    Log.e(TAG, retVidUrl);
+
                     return retVidUrl;
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Couldn't get YouTube streaming URL", e);
+                Log.e("e", "Couldn't get YouTube streaming URL", e);
             }
-            Log.w(TAG, "Couldn't get stream URI for " + url);
+            Log.w("w", "Couldn't get stream URI for " + url);
             return null;
         }
 

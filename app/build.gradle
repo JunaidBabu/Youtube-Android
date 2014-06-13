@@ -19,8 +19,9 @@ android {
 }
 
 dependencies {
+
+    //compile 'com.github.axet:vget:1.1.5'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.google.android.gms:play-services:4.1.32'
-    compile 'com.github.axet:vget:1.1.5'
 }

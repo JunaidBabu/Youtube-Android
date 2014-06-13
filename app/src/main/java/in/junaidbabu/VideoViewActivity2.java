@@ -140,6 +140,17 @@ public class VideoViewActivity2 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_view_activity2);
 
-        new ReceivingDataFromYoutube().execute();
+        try {
+            // ex: http://www.youtube.com/watch?v=Nj6PFaDmp6c
+            String url = "http://www.youtube.com/watch?v=Nj6PFaDmp6c";
+            // ex: "/Users/axet/Downloads"
+            String path = "/storage/emulated/0/Videos/";
+           // VGet v = new VGet(new URL(url), new File(path));
+           // v.download();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        //new ReceivingDataFromYoutube().execute();
     }
 }
