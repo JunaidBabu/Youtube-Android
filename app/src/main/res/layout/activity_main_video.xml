@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    tools:context=".VideoViewSample" >
+
+    <mysc.CustomVideoView
+        android:id="@+id/myplaysurface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/webView" />
+
+    <WebView
+        android:layout_width="wrap_content"
+        android:id="@+id/webView"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
