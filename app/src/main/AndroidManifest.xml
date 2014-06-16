@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".YouTube" />
-        <activity android:name=".PlayerControlsDemoActivity" />
         <activity android:name=".VideoViewActivity" />
 
         <meta-data

@@ -9,12 +9,8 @@
     <mysc.CustomVideoView
         android:id="@+id/myplaysurface"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/webView" />
+        android:layout_height="match_parent" />
 
-    <WebView
-        android:layout_width="wrap_content"
-        android:id="@+id/webView"
-        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>

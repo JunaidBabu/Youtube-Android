@@ -21,4 +21,8 @@ public class VideoClass {
     public String getTitle(){
         return this.Title;
     }
+
+    public String getThumb(){
+        return this.Des;
+    }
 }
