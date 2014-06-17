@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-    <HorizontalScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="700dp"
     android:layout_height="400dp">
 
@@ -13,7 +11,9 @@
 
 
     <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="220dp"
+        android:layout_margin="5dp"
+
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <TextView
@@ -29,23 +29,58 @@
         android:layout_height="wrap_content" />
     </LinearLayout>
 
-
+    <LinearLayout
+        android:layout_width="220dp"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="Rock"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" />
     <ListView
         android:id="@+id/listView2"
         android:background="@drawable/rounded_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="220dp"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="Billboard 2013"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" />
     <ListView
         android:id="@+id/listView3"
         android:background="@drawable/rounded_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="5dp"
 
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="Billboard 2014"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center" />
     <ListView
         android:id="@+id/listView4"
         android:background="@drawable/rounded_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>
 </HorizontalScrollView>
