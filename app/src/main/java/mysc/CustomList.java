@@ -41,14 +41,14 @@ public class CustomList extends ArrayAdapter<VideoClass> {
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText(VC.get(position).getTitle());
-        new DownloadImageTask(imageView)
-                .execute(VC.get(position).getThumb());
+       // new DownloadImageTask(imageView).execute(VC.get(position).getThumb());
         //imageView.setImageResource(imageId[position]);
         return rowView;
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
+        private Bitmap bitmap;
 
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
@@ -59,12 +59,26 @@ public class CustomList extends ArrayAdapter<VideoClass> {
             Bitmap mIcon11 = null;
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
+                bitmap = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
-            return mIcon11;
+
+//            URL url = null;
+//            try {
+//                url = new URL(urldisplay);
+//                URLConnection connection = url.openConnection();
+//                connection.setUseCaches(true);
+//                Object response = connection.getContent();
+//                if (response instanceof Bitmap) {
+//                    bitmap = (Bitmap)response;
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+
+            return bitmap;
         }
 
         protected void onPostExecute(Bitmap result) {

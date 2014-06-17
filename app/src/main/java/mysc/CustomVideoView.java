@@ -23,6 +23,7 @@ public class CustomVideoView extends VideoView {
         super(context, attrs, defStyle);
     }
 
+
     public void setPlayPauseListener(PlayPauseListener listener) {
         mListener = listener;
     }

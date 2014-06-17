@@ -41,6 +41,12 @@
             android:name=".MainVideoActivity"
             android:label="@string/title_activity_main_video" >
         </activity>
+        <activity
+            android:name=".PlaylistActivity"
+            android:label="Channels"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+
     </application>
 
 </manifest>
