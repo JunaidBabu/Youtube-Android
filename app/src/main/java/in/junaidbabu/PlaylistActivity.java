@@ -1,6 +1,7 @@
 package in.junaidbabu;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,60 +20,84 @@ import mysc.GetUserReco;
 
 public class PlaylistActivity extends Activity {
 
+    static String url_Playlist2 = "https://gdata.youtube.com/feeds/api/playlists/PL55713C70BA91BD6E?v=2&alt=json";
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playlistactivity);
-
-        GetUserReco.AsyncResult asyncResult = new GetUserReco.AsyncResult() {
+        context=this;
+        new GetUserReco(new GetUserReco.AsyncResult() {
             @Override
             public void gotResult(String s) {
-                JSONObject result= null;
-                try {
-                    result = new JSONObject(s);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Log.i("json", result.toString());
-                String title, id;
-                MainVideoActivity.VC = new ArrayList<VideoClass>();
-                try {
-                    for(int i = 0; i< result.getJSONObject("feed").getJSONArray("entry").length(); i++){
-                        title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
-                        id=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("media$group").getJSONObject("yt$videoid").getString("$t");
-                        MainVideoActivity.VC.add(new VideoClass(id, title, "http://img.youtube.com/vi/" + id + "/default.jpg"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 ListView lv = (ListView) findViewById(R.id.listView);
-                ListView lv2 = (ListView) findViewById(R.id.listView2);
-                ListView lv3 = (ListView) findViewById(R.id.listView3);
-                ListView lv4 = (ListView) findViewById(R.id.listView4);
-
-
-                CustomList adapter = new
-                        CustomList(getApplicationContext(), MainVideoActivity.VC);
-                lv.setAdapter(adapter);
-                lv2.setAdapter(adapter);
-                lv3.setAdapter(adapter);
-                lv4.setAdapter(adapter);
-
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                        startPlayback(MainVideoActivity.VC, i);
-                        finish();
-                    }
-                });
-
+                ListPop(lv, s);
             }
-        };
-        new GetUserReco(asyncResult, MainVideoActivity.url_Playlist);
+        }, MainVideoActivity.url_Playlist);
 
+
+        new GetUserReco(new GetUserReco.AsyncResult() {
+            @Override
+            public void gotResult(String s) {
+                ListView lv = (ListView) findViewById(R.id.listView2);
+                ListPop(lv, s);
+            }
+        }, MainVideoActivity.url_Playlist);
+
+
+        new GetUserReco(new GetUserReco.AsyncResult() {
+            @Override
+            public void gotResult(String s) {
+                ListView lv = (ListView) findViewById(R.id.listView3);
+                ListPop(lv, s);
+            }
+        }, url_Playlist2);
+
+
+        new GetUserReco(new GetUserReco.AsyncResult() {
+            @Override
+            public void gotResult(String s) {
+                ListView lv = (ListView) findViewById(R.id.listView4);
+                ListPop(lv, s);
+            }
+        }, MainVideoActivity.url_Playlist);
 
     }
 
+
+    public void ListPop(ListView v, String s){
+        JSONObject result= null;
+        try {
+            result = new JSONObject(s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i("json", result.toString());
+        String title, id;
+        MainVideoActivity.VC = new ArrayList<VideoClass>();
+        try {
+            for(int i = 0; i< result.getJSONObject("feed").getJSONArray("entry").length(); i++){
+                title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
+                id=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("media$group").getJSONObject("yt$videoid").getString("$t");
+                MainVideoActivity.VC.add(new VideoClass(id, title, "http://img.youtube.com/vi/" + id + "/default.jpg"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+       // v = (ListView) findViewById(R.id.listView);
+
+        CustomList adapter = new
+                CustomList(getApplicationContext(), MainVideoActivity.VC);
+        v.setAdapter(adapter);
+
+        v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                startPlayback(MainVideoActivity.VC, i);
+                finish();
+            }
+        });
+    }
 
     public void startPlayback(List<VideoClass> vc, final int pos) {
 
