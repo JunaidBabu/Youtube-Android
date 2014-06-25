@@ -42,7 +42,7 @@ public class MainVideoActivity extends Activity {
         mVideoView.setPlayPauseListener(new CustomVideoView.PlayPauseListener() {
             @Override
             public void onPlay() {
-                Toast.makeText(c, "Playing", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(c, "Playing", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onPause() {
@@ -103,9 +103,17 @@ public class MainVideoActivity extends Activity {
 
                 return true;
             }
-            case 19:
+            case 22:
             {
-
+                //Next
+                PlaylistActivity.startPlayback(MainVideoActivity.VCC.get(MainVideoActivity.NowSelected), MainVideoActivity.NowPlaying + 1);
+                return true;
+            }
+            case 21:
+            {
+                PlaylistActivity.startPlayback(MainVideoActivity.VCC.get(MainVideoActivity.NowSelected), MainVideoActivity.NowPlaying - 1);
+                return true;
+                //Prev
             }
         }
         return super.onKeyDown(keyCode, event);
