@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 import in.junaidbabu.R;
@@ -59,26 +58,26 @@ public class CustomList extends ArrayAdapter<VideoClass> {
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
             Bitmap mIcon11 = null;
-//            try {
-//                InputStream in = new java.net.URL(urldisplay).openStream();
-//                bitmap = BitmapFactory.decodeStream(in);
-//            } catch (Exception e) {
-//                Log.e("Error", e.getMessage());
-//                e.printStackTrace();
-//            }
-
-            URL url = null;
             try {
-                url = new URL(urldisplay);
-                URLConnection connection = url.openConnection();
-                connection.setUseCaches(true);
-                Object response = connection.getContent();
-               // if (response instanceof Bitmap) {
-                    bitmap = BitmapFactory.decodeStream((InputStream) response);
-               // }
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
+                Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
+
+//            URL url = null;
+//            try {
+//                url = new URL(urldisplay);
+//                URLConnection connection = url.openConnection();
+//                connection.setUseCaches(true);
+//                Object response = connection.getContent();
+//               // if (response instanceof Bitmap) {
+//                    bitmap = BitmapFactory.decodeStream((InputStream) response);
+//               // }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
             return bitmap;
         }
