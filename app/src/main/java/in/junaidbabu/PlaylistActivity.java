@@ -27,7 +27,7 @@ public class PlaylistActivity extends Activity {
     static String url_PlaylistRock = "https://gdata.youtube.com/feeds/api/playlists/PL0420B28C0AB16AD6?v=2&alt=json";
 
 
-    Context context;
+    static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +157,7 @@ public class PlaylistActivity extends Activity {
         });
     }
 
-    public void startPlayback(List<VideoClass> vc, final int pos) {
+    public static void startPlayback(List<VideoClass> vc, final int pos) {
         MainVideoActivity.mVideoView.requestFocus();
         MainVideoActivity.NowPlaying = pos;
         Toast(MainVideoActivity.VCC.get(MainVideoActivity.NowSelected).get(MainVideoActivity.NowPlaying).getTitle());
@@ -172,8 +172,8 @@ public class PlaylistActivity extends Activity {
                     MainVideoActivity.mVideoView.start();
                 }
             };
-            new GetUserReco(url, getString(R.string.serverip) + vc.get(pos).getVid());
-            Log.w("url", getString(R.string.serverip) + vc.get(pos).getVid());
+            new GetUserReco(url, context.getString(R.string.serverip) + vc.get(pos).getVid());
+            Log.w("url", context.getString(R.string.serverip) + vc.get(pos).getVid());
         }else{
             MainVideoActivity.mVideoView.setVideoURI(Uri.parse(vc.get(pos).getLongUrl()));
             MainVideoActivity.mVideoView.start();
@@ -181,7 +181,7 @@ public class PlaylistActivity extends Activity {
         //mMetadataRetriever.setDataSource(videoPath);
 
     }
-    public void Toast(String s){
+    public static void Toast(String s){
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
 }
