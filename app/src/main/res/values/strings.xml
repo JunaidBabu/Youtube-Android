@@ -12,5 +12,6 @@
     <string name="title_activity_playlist">PlaylistActivity</string>
     <string name="serverip">http://192.168.11.60:5000/</string>
     <string name="title_activity_horizontal_list">HorizontalList</string>
+    <string name="title_activity_compare">CompareActivity</string>
 
 </resources>
