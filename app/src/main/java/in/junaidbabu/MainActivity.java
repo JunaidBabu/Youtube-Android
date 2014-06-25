@@ -33,15 +33,14 @@ public class MainActivity extends ActionBarActivity implements UndoBarController
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        startActivity(new Intent(this, MainVideoActivity.class));
+        finish();
 
         setContentView(R.layout.activity_main);
 
-        mUndoBarController = new UndoBarController(findViewById(R.id.undobar), this);
+       // mUndoBarController = new UndoBarController(findViewById(R.id.undobar), this);
 
-        mUndoBarController.showUndoBar(
-                false,
-                "Isn't this awesome? :D",
-                null);
+       // mUndoBarController.showUndoBar(false,"Isn't this awesome? :D",null);
 
         Intent googlePicker = AccountPicker.newChooseAccountIntent(null, null,
                 new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null) ;
