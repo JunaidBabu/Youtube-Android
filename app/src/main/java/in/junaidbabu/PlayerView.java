@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -13,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.MediaController;
 
 import mysc.CustomVideoView;
 
@@ -21,7 +22,6 @@ public class PlayerView extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public static CustomVideoView mVideoView;
-    public static String channelName;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -140,6 +140,14 @@ public class PlayerView extends Activity
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_player_view, container, false);
             mVideoView = (CustomVideoView) rootView.findViewById(R.id.myplaysurface);
+
+            mVideoView.setMediaController(new MediaController(getActivity(), false));
+            mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.NowPlaying + 1);
+                }
+            });
             return rootView;
         }
 
@@ -154,25 +162,77 @@ public class PlayerView extends Activity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        final DrawerLayout mDrawerLayout = (DrawerLayout)this.findViewById(R.id.drawer_layout);
+        //Toast.makeText(this, keyCode+"", Toast.LENGTH_SHORT).show();
 
         //Toast(keyCode+"");
         switch (keyCode) {
             case 82: // Menu key
             {
-               // startActivity(new Intent(c, PlaylistActivity.class));
-                Toast.makeText(this, "Menu", Toast.LENGTH_SHORT).show();
-                final DrawerLayout drawer = (DrawerLayout)this.findViewById(R.id.drawer_layout);
-                drawer.openDrawer(Gravity.LEFT);
+
+                //drawer.openDrawer(Gravity.LEFT);
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                } else {
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                }
                 return true;
             }
-//            case 22:
-//            {
-//
-//            }
-//            case 21:
-//            {
-//
-//            }
+            case 22: //right
+            {
+                mVideoView.seekTo(mVideoView.getCurrentPosition()+10000);
+                return true;
+            }
+            case 21: //left
+            {
+                mVideoView.seekTo(mVideoView.getCurrentPosition()-10000);
+                //Toast.makeText(this, mVideoView.getCurrentPosition()+"", Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+            case 23: //middle button
+            {
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.Selection);
+                    return super.onKeyDown(keyCode, event);
+                } else {
+                    if (mVideoView.isPlaying())
+                        mVideoView.pause();
+                    else
+                        mVideoView.start();
+                    return true;
+                }
+
+            }
+            case 19: //up
+            {
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection-1);
+                    if (NavigationDrawerFragment.Selection>0)
+                        NavigationDrawerFragment.Selection--;
+                } else {
+                    NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.NowPlaying-1);
+                }
+
+                //
+                return true;
+            }
+            case 20: //down
+            {
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection+1);
+                    if (NavigationDrawerFragment.Selection<=NavigationDrawerFragment.VC.size())
+                        NavigationDrawerFragment.Selection++;
+                } else {
+                    NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.NowPlaying+1);
+                }
+
+                return true;
+            }
+            case 4: //back
+            {
+               // return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
