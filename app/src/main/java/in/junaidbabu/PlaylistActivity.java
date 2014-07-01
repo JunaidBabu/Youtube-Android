@@ -121,7 +121,7 @@ public class PlaylistActivity extends Activity {
             for(int i = 0; i< result.getJSONObject("feed").getJSONArray("entry").length(); i++){
                 title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
                 id=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("media$group").getJSONObject("yt$videoid").getString("$t");
-                MainVideoActivity.VCC.get(Pid).add(new VideoClass(id, title, "http://img.youtube.com/vi/" + id + "/default.jpg"));
+                MainVideoActivity.VCC.get(Pid).add(new VideoClass(context, id, title, "http://img.youtube.com/vi/" + id + "/default.jpg"));
                 MainVideoActivity.VCC.get(Pid).get(i).parseLongUrl();
             }
         } catch (JSONException e) {
