@@ -23,7 +23,6 @@ public class ChannelActivity extends Activity implements View.OnClickListener{
     }
 
     public void setAllButtonListener(ViewGroup viewGroup) {
-
         View v;
         for (int i = 0; i < viewGroup.getChildCount(); i++) {
             v = viewGroup.getChildAt(i);
@@ -34,13 +33,7 @@ public class ChannelActivity extends Activity implements View.OnClickListener{
             }
         }
     }
-    public void toasted(View v){
-        Toast.makeText(this, "yo", Toast.LENGTH_SHORT).show();
-    }
 
-    public void toasted2(View v){
-        Toast.makeText(this, "yo2", Toast.LENGTH_SHORT).show();
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -65,7 +58,8 @@ public class ChannelActivity extends Activity implements View.OnClickListener{
         Button b = (Button)view;
         Toast.makeText(this, b.getText(), Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, PlayerView.class);
-        channel = b.getText().toString();
+
+        channel=b.getText().toString().replaceAll("\\s+","");
         startActivity(i);
     }
 }
