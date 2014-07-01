@@ -10,8 +10,16 @@
     <string name="title_activity_web_view">WebView</string>
     <string name="title_activity_main_video">MainVideoActivity</string>
     <string name="title_activity_playlist">PlaylistActivity</string>
-    <string name="serverip">http://192.168.11.60:5000/</string>
+    <string name="serverip">http://192.168.11.94:5000/</string>
     <string name="title_activity_horizontal_list">HorizontalList</string>
     <string name="title_activity_compare">CompareActivity</string>
+    <string name="title_activity_channel">ChannelActivity</string>
+    <string name="title_activity_player_view">PlayerView</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
 
 </resources>
