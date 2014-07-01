@@ -1,5 +1,7 @@
 package in.junaidbabu;
 
+import android.content.Context;
+
 import mysc.GetUserReco;
 
 /**
@@ -11,8 +13,11 @@ public class VideoClass {
     String thumb;
     String LongUrl=null;
 
-    VideoClass(String vid, String title, String descr){
+    Context c;
+
+    VideoClass(Context cnt, String vid, String title, String descr){
         this.Vid=vid;
+        this.c = cnt;
         this.Title=title;
         this.thumb=descr;
     }
@@ -43,7 +48,7 @@ public class VideoClass {
                 VideoClass.this.setLongUrl(s);
             }
         };
-        new GetUserReco(url, MainVideoActivity.c.getString(R.string.serverip) + this.Vid);
+        new GetUserReco(url, c.getString(R.string.serverip) + this.Vid);
 
     }
 }
