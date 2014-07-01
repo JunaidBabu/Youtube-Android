@@ -14,7 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.MediaController;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import mysc.CustomVideoView;
 
@@ -141,13 +142,33 @@ public class PlayerView extends Activity
             View rootView = inflater.inflate(R.layout.fragment_player_view, container, false);
             mVideoView = (CustomVideoView) rootView.findViewById(R.id.myplaysurface);
 
-            mVideoView.setMediaController(new MediaController(getActivity(), false));
+            //CustomMediaController controller=new CustomMediaController(getActivity());
+            //mVideoView.setMediaController(controller);
             mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.NowPlaying + 1);
                 }
             });
+
+            final SeekBar s = (SeekBar) rootView.findViewById(R.id.seekbar);
+            final TextView t1 = (TextView) rootView.findViewById(R.id.nextvideo);
+            new Thread()
+            {
+                @Override
+                public void run() {
+                    while(true) {
+                        s.setMax(mVideoView.getDuration());
+                        s.setProgress(mVideoView.getCurrentPosition());
+//                        if(mVideoView.getDuration()-mVideoView.getCurrentPosition()<10000){
+//                          //  t1.setText("Next video in "+(mVideoView.getDuration()-mVideoView.getCurrentPosition())/1000+" seconds");
+//                        }else{
+//                            t1.setText("Currently playing: "+NavigationDrawerFragment.VC.get(NavigationDrawerFragment.NowPlaying).getTitle());
+//                        }
+                    }
+                }
+            }.start();
+
             return rootView;
         }
 
@@ -194,7 +215,7 @@ public class PlayerView extends Activity
             {
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.Selection);
-                    return super.onKeyDown(keyCode, event);
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
                 } else {
                     if (mVideoView.isPlaying())
                         mVideoView.pause();
