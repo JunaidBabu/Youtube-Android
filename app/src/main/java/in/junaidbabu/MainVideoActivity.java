@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebView;
@@ -29,7 +28,7 @@ public class MainVideoActivity extends Activity {
     int CacheCount;
     WebView mWebView;
     private MediaController mController;
-    MediaMetadataRetriever mMetadataRetriever;
+    //MediaMetadataRetriever mMetadataRetriever;
     @ Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class MainVideoActivity extends Activity {
             }
         });
 
-        mMetadataRetriever = new MediaMetadataRetriever();
+        //mMetadataRetriever = new MediaMetadataRetriever();
         mController = new MediaController(c, false);
         mVideoView.setMediaController(mController);
        // showDialog();

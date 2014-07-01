@@ -14,6 +14,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +42,8 @@ import mysc.GetUserReco;
 public class NavigationDrawerFragment extends Fragment {
     public static List<VideoClass> VC;
     static Context context;
+    public static int NowPlaying=0;
+    public static int Selection=0;
     /**
      * Remember the position of the selected item.
      */
@@ -63,7 +66,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
+    public static ListView mDrawerListView;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
@@ -159,6 +162,7 @@ public class NavigationDrawerFragment extends Fragment {
                     public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                        // MainVideoActivity.NowSelected=Pid;
                        startPlayback(VC, i);
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                        // finish();
                     }
                 });
@@ -172,6 +176,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     public static void startPlayback(List<VideoClass> vc, final int pos) {
         PlayerView.mVideoView.requestFocus();
+        NowPlaying=pos;
         //MainVideoActivity.NowPlaying = pos;
         //Toast(MainVideoActivity.VCC.get(MainVideoActivity.NowSelected).get(MainVideoActivity.NowPlaying).getTitle());
 
