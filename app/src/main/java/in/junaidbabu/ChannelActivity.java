@@ -1,6 +1,7 @@
 package in.junaidbabu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 public class ChannelActivity extends Activity implements View.OnClickListener{
 
+    public static String channel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,5 +64,8 @@ public class ChannelActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         Button b = (Button)view;
         Toast.makeText(this, b.getText(), Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, PlayerView.class);
+        channel = b.getText().toString();
+        startActivity(i);
     }
 }
