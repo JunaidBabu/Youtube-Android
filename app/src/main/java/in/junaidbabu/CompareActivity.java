@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.MediaController;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -18,7 +19,8 @@ public class CompareActivity extends YouTubeBaseActivity {
     YouTubePlayer player;
     CustomVideoView video;
     TextView t1,t2;
-    String url="https://r1---sn-nvoxu-ioql.googlevideo.com/videoplayback?id=o-AJTrcXTNtHolZekbXnsV_fRP5qBOFPdylN_-JkMgizRA&expire=1403690400&source=youtube&ms=au&mt=1403667628&fexp=900233%2C924222%2C927625%2C930008%2C931962%2C934030%2C937427%2C948200&mv=m&ipbits=0&ratebypass=yes&pm_type=static&pfa=5s&ip=182.171.224.146&key=yt5&gcr=jp&requiressl=yes&sparams=gcr%2Cid%2Cip%2Cipbits%2Citag%2Cpbr%2Cpfa%2Cpm_type%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&pbr=yes&sver=3&upn=VqTuAo-PQcU&mws=yes&itag=22&signature=8F42CD2DEFA515EB2D468575DFD4A13EFEFA64DC.4A0BC41821B17C5A74B2EC6D5E38761B4129C51C";
+    String url="https://r1---sn-nvoxu-ioql.googlevideo.com/videoplayback?sver=3&mv=m&requiressl=yes&ipbits=0&itag=22&ip=182.171.224.146&sparams=gcr%2Cid%2Cip%2Cipbits%2Citag%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&fexp=902408%2C902531%2C914088%2C916612%2C917000%2C924222%2C930008%2C931014%2C934024%2C934030%2C936209%2C937427&upn=4YSB4Ua236Y&expire=1404198000&ms=au&id=o-ACa-e0QzVSL5yXk8KkpXzn6VOCLX_1rdR-Kg36XTupBy&mws=yes&key=yt5&mt=1404174281&gcr=jp&ratebypass=yes&source=youtube&signature=728C32076F3487B99F1E645149ACC36EAB1904.73B700F8B5F14A043B53EA5D139B6706F355BEC4";
+    String vid="k4V3Mo61fJM";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,9 @@ public class CompareActivity extends YouTubeBaseActivity {
         // YouTubePlayerView youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         //youTubeView.initialize(DeveloperKey.DEVELOPER_KEY, this);
         video= (CustomVideoView) findViewById(R.id.videoView);
+
+
+        video.setMediaController(new MediaController(this, false));
         YouTubePlayerView videoview = ((YouTubePlayerView) findViewById(R.id.youtube_view));
         videoview.initialize(DeveloperKey.DEVELOPER_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
@@ -37,7 +42,7 @@ public class CompareActivity extends YouTubeBaseActivity {
                 if (!restored1) {
                     video.setVideoURI(Uri.parse(url));
 
-                    player.cueVideo("k4V3Mo61fJM");
+                    player.cueVideo(vid);
                     player.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
                         @Override
                         public void onLoading() {
@@ -47,8 +52,8 @@ public class CompareActivity extends YouTubeBaseActivity {
 
                         @Override
                         public void onLoaded(String s) {
-                            //player.play();
-                            Log.e("asfasdfasdf","loaded");
+                            player.play();
+                            Log.e("asfasdfasdf", "loaded");
                         }
 
                         @Override
@@ -115,12 +120,12 @@ public class CompareActivity extends YouTubeBaseActivity {
     }
     public void reset(View v){
         video.stopPlayback();
-     //   video.setVideoURI(Uri.parse(""));
+        video.setVideoURI(Uri.parse(""));
         video.setVideoURI(Uri.parse(url));
 
-        player.cueVideo("k4V3Mo61fJM");
+        player.cueVideo(vid);
         //player.play();
-        ///video.start();
+        video.start();
     }
 }
 
