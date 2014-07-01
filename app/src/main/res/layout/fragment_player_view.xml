@@ -22,4 +22,26 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true" />
 
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/nextvideo"
+            android:layout_width="fill_parent"
+            android:text="Next Video in 5 seconds"
+            android:textColor="#fff"
+            android:layout_height="fill_parent" />
+        </LinearLayout>
+    <SeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/seekbar"
+        android:layout_marginBottom="-30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
