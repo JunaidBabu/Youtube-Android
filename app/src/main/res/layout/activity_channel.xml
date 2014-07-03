@@ -7,25 +7,35 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/roottable"
+
             android:layout_row="1"
             android:layout_column="0">
 
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
-                <Button
-                    android:id="@+id/animation"
-                    android:text="Animation"
-                    android:layout_height="150dp"
-                    android:layout_width="220dp"
-                    android:layout_row="0"
-                    android:layout_column="0" > </Button>
+
+
+                    <Button
+                        android:id="@+id/animation"
+                        android:text="Animation"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:textColor="#fff"
+
+                        android:background="@drawable/animations"
+                        android:paddingTop="90dp"
+                        android:layout_height="150dp"
+                        android:layout_width="220dp"
+                        > </Button>
 
                 <Button
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Art"
+                    android:background="@drawable/art"
                     android:id="@+id/art"
+                    android:paddingTop="90dp"
                     android:layout_row="0"
                     android:layout_column="1" />
 
@@ -33,6 +43,8 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Comedy"
+                    android:background="@drawable/comedy"
+                    android:paddingTop="90dp"
                     android:id="@+id/comedy"
                     android:layout_row="0"
                     android:layout_column="2" />
@@ -41,6 +53,8 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Education"
+                    android:background="@drawable/education"
+                    android:paddingTop="90dp"
                     android:id="@+id/education"
                     android:layout_column="3" />
             </TableRow>
@@ -51,7 +65,9 @@
                 <Button
                     android:id="@+id/everyday"
                     android:text="Everyday Life"
+                    android:background="@drawable/everyday"
                     android:layout_height="150dp"
+                    android:paddingTop="90dp"
                     android:layout_width="220dp"
                     android:layout_row="0"
                     android:layout_column="0" > </Button>
@@ -60,7 +76,9 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Fashion"
+                    android:paddingTop="90dp"
                     android:id="@+id/fashion"
+                    android:background="@drawable/fashion"
                     android:layout_row="0"
                     android:layout_column="1" />
 
@@ -68,7 +86,9 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="HD"
+                    android:paddingTop="90dp"
                     android:id="@+id/hd"
+                    android:background="@drawable/hd"
                     android:layout_row="0"
                     android:layout_column="2" />
 
@@ -76,7 +96,9 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Music"
+                    android:paddingTop="90dp"
                     android:id="@+id/music"
+                    android:background="@drawable/music"
                     android:layout_column="3" />
             </TableRow>
 
@@ -86,7 +108,9 @@
                 <Button
                     android:id="@+id/nature"
                     android:text="Nature"
+                    android:background="@drawable/nature"
                     android:layout_height="150dp"
+                    android:paddingTop="90dp"
                     android:layout_width="220dp"
                     android:layout_row="0"
                     android:layout_column="0" > </Button>
@@ -95,6 +119,8 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Science"
+                    android:paddingTop="90dp"
+                    android:background="@drawable/science"
                     android:id="@+id/science"
                     android:layout_row="0"
                     android:layout_column="1" />
@@ -103,7 +129,9 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Sports"
+                    android:paddingTop="90dp"
                     android:id="@+id/sports"
+                    android:background="@drawable/sports"
                     android:layout_row="0"
                     android:layout_column="2" />
 
@@ -111,7 +139,9 @@
                     android:layout_height="150dp"
                     android:layout_width="220dp"
                     android:text="Travel"
+                    android:paddingTop="90dp"
                     android:id="@+id/travel"
+                    android:background="@drawable/travel"
                     android:layout_column="3" />
             </TableRow>
 

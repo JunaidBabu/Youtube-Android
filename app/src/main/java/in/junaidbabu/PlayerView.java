@@ -23,6 +23,7 @@ public class PlayerView extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public static CustomVideoView mVideoView;
+    public static TextView NotifText;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -152,20 +153,32 @@ public class PlayerView extends Activity
             });
 
             final SeekBar s = (SeekBar) rootView.findViewById(R.id.seekbar);
-            final TextView t1 = (TextView) rootView.findViewById(R.id.nextvideo);
+            NotifText = (TextView) rootView.findViewById(R.id.nextvideo);
             new Thread()
             {
                 @Override
                 public void run() {
                     while(true) {
+                        if (mVideoView.isPlaying()){
                         s.setMax(mVideoView.getDuration());
                         s.setProgress(mVideoView.getCurrentPosition());
 //                        if(mVideoView.getDuration()-mVideoView.getCurrentPosition()<10000){
-//                          //  t1.setText("Next video in "+(mVideoView.getDuration()-mVideoView.getCurrentPosition())/1000+" seconds");
+////                            getActivity().runOnUiThread(new Runnable() {
+////                                @Override
+////                                public void run() {
+////                                    t1.setText("Next video in " + (mVideoView.getDuration() - mVideoView.getCurrentPosition()) / 1000 + " seconds");
+////                                    try {
+////                                        sleep(10000);
+////                                    } catch (InterruptedException e) {
+////                                        e.printStackTrace();
+////                                    }
+////                                }
+////                            });
+//
 //                        }else{
-//                            t1.setText("Currently playing: "+NavigationDrawerFragment.VC.get(NavigationDrawerFragment.NowPlaying).getTitle());
+//                            //t1.setText("Currently playing: "+NavigationDrawerFragment.VC.get(NavigationDrawerFragment.NowPlaying).getTitle());
 //                        }
-                    }
+                    }}
                 }
             }.start();
 

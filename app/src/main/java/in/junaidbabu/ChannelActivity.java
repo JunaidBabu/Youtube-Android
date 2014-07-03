@@ -10,19 +10,48 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.Toast;
+
+import mysc.ImageAdapter;
 
 public class ChannelActivity extends Activity implements View.OnClickListener{
 
     public static String channel;
+    public String[] mTitle = {
+            "Animations", "Art", "Comedy", "Education",
+            "Everyday Life", "Fashion", "HD", "Music",
+            "Nature", "Science & Tech", "Sports", "Travel & Events"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_channel);
+        setContentView(R.layout.gridlayout);
 
-        ViewGroup group = (ViewGroup)findViewById(R.id.roottable);
-        setAllButtonListener(group);
+        GridView gridView = (GridView) findViewById(R.id.grid_view);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+
+                Intent i = new Intent(ChannelActivity.this, PlayerView.class);
+
+                channel=mTitle[position].replaceAll("\\s+","");
+                startActivity(i);
+                // Sending image id to FullScreenActivity
+                //Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+                // passing array index
+            //    i.putExtra("id", position);
+             //   startActivity(i);
+            }
+        });
+        // Instance of ImageAdapter Class
+        gridView.setAdapter(new ImageAdapter(this));
+//        ViewGroup group = (ViewGroup)findViewById(R.id.roottable);
+//        setAllButtonListener(group);
     }
 
     public void setAllButtonListener(ViewGroup viewGroup) {

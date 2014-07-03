@@ -47,7 +47,7 @@
         </activity>
         <activity
             android:name=".ChannelActivity"
-            android:label="@string/title_activity_channel"
+            android:label="Channels"
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
