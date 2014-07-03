@@ -4,6 +4,6 @@
     android:layout_height="match_parent"
 
     android:divider="@android:color/transparent"
-
+android:listSelector="@drawable/selector"
     android:background="@android:color/transparent"
     tools:context="in.junaidbabu.NavigationDrawerFragment" />
