@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import mysc.CustomVideoView;
+import mysc.GetUserReco;
 
 public class PlayerView extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -259,12 +261,28 @@ public class PlayerView extends Activity
         }
         return super.onKeyDown(keyCode, event);
     }
-
+    static int flag=0;
     public static void setSelection(int selec){
         if((NavigationDrawerFragment.Selection>selec && NavigationDrawerFragment.Selection>0) || (NavigationDrawerFragment.Selection<selec && NavigationDrawerFragment.Selection<NavigationDrawerFragment.VC.size()-1)){
             NavigationDrawerFragment.Selection=selec;
-        }else if(NavigationDrawerFragment.Selection == selec)
-            NavigationDrawerFragment.Selection=selec;
+        }
+       // NavigationDrawerFragment.mDrawerListView.smoothScrollToPositionFromTop(NavigationDrawerFragment.Selection, 200);
         NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection);
+
+        if(NavigationDrawerFragment.VC.size()-selec < 5){
+            Toast.makeText(NavigationDrawerFragment.context, "Should load more now", Toast.LENGTH_SHORT).show();
+            if(flag==0){
+                flag=1;
+            new GetUserReco(new GetUserReco.AsyncResult() {
+                @Override
+                public void gotResult(String s) {
+                    //ListView lv = (ListView) findViewById(R.id.listView4);
+                    // ListPop(mDrawerListView, s);
+                    Log.w("s", s);
+                    NavigationDrawerFragment.Listpopulate(s);
+                    flag=0;
+                }
+            },  NextURL);
+        }}
     }
 }
