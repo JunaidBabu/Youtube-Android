@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 import mysc.CustomVideoView;
 import mysc.GetUserReco;
 
-public class PlayerView extends Activity
+public class PlayerView extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public static CustomVideoView mVideoView;
@@ -41,8 +42,8 @@ public class PlayerView extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_view);
 
+            setContentView(R.layout.activity_player_view);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -255,7 +256,8 @@ public class PlayerView extends Activity
             }
             case 4: //back
             {
-
+              //  startActivity(new Intent(this, ChannelActivity.class));
+               // finish();
                // return true;
             }
         }
