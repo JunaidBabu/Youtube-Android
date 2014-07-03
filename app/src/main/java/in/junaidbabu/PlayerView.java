@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import mysc.CustomVideoView;
 
@@ -24,6 +25,7 @@ public class PlayerView extends Activity
 
     public static CustomVideoView mVideoView;
     public static TextView NotifText;
+    public static String NextURL;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -159,26 +161,13 @@ public class PlayerView extends Activity
                 @Override
                 public void run() {
                     while(true) {
-                        if (mVideoView.isPlaying()){
-                        s.setMax(mVideoView.getDuration());
-                        s.setProgress(mVideoView.getCurrentPosition());
-//                        if(mVideoView.getDuration()-mVideoView.getCurrentPosition()<10000){
-////                            getActivity().runOnUiThread(new Runnable() {
-////                                @Override
-////                                public void run() {
-////                                    t1.setText("Next video in " + (mVideoView.getDuration() - mVideoView.getCurrentPosition()) / 1000 + " seconds");
-////                                    try {
-////                                        sleep(10000);
-////                                    } catch (InterruptedException e) {
-////                                        e.printStackTrace();
-////                                    }
-////                                }
-////                            });
-//
-//                        }else{
-//                            //t1.setText("Currently playing: "+NavigationDrawerFragment.VC.get(NavigationDrawerFragment.NowPlaying).getTitle());
-//                        }
-                    }}
+                        try{
+                        if (mVideoView.isPlaying()) {
+                            s.setMax(mVideoView.getDuration());
+                            s.setProgress(mVideoView.getCurrentPosition());
+                        }
+                    }catch (Exception e){}
+                    }
                 }
             }.start();
 
@@ -197,13 +186,13 @@ public class PlayerView extends Activity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         final DrawerLayout mDrawerLayout = (DrawerLayout)this.findViewById(R.id.drawer_layout);
-        //Toast.makeText(this, keyCode+"", Toast.LENGTH_SHORT).show();
 
-        //Toast(keyCode+"");
         switch (keyCode) {
             case 82: // Menu key
             {
 
+                NavigationDrawerFragment.Selection=NavigationDrawerFragment.NowPlaying;
+                NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection);
                 //drawer.openDrawer(Gravity.LEFT);
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -219,6 +208,8 @@ public class PlayerView extends Activity
             }
             case 21: //left
             {
+                Toast.makeText(this, "Current selection " + NavigationDrawerFragment.Selection + "", Toast.LENGTH_LONG).show();
+
                 mVideoView.seekTo(mVideoView.getCurrentPosition()-10000);
                 //Toast.makeText(this, mVideoView.getCurrentPosition()+"", Toast.LENGTH_SHORT).show();
 
@@ -241,9 +232,7 @@ public class PlayerView extends Activity
             case 19: //up
             {
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                    NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection-1);
-                    if (NavigationDrawerFragment.Selection>0)
-                        NavigationDrawerFragment.Selection--;
+                    setSelection(NavigationDrawerFragment.Selection - 1);
                 } else {
                     NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.NowPlaying-1);
                 }
@@ -254,9 +243,8 @@ public class PlayerView extends Activity
             case 20: //down
             {
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                    NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection+1);
-                    if (NavigationDrawerFragment.Selection<=NavigationDrawerFragment.VC.size())
-                        NavigationDrawerFragment.Selection++;
+                    setSelection(NavigationDrawerFragment.Selection+1);
+
                 } else {
                     NavigationDrawerFragment.startPlayback(NavigationDrawerFragment.VC, NavigationDrawerFragment.NowPlaying+1);
                 }
@@ -265,9 +253,18 @@ public class PlayerView extends Activity
             }
             case 4: //back
             {
+
                // return true;
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public static void setSelection(int selec){
+        if((NavigationDrawerFragment.Selection>selec && NavigationDrawerFragment.Selection>0) || (NavigationDrawerFragment.Selection<selec && NavigationDrawerFragment.Selection<NavigationDrawerFragment.VC.size()-1)){
+            NavigationDrawerFragment.Selection=selec;
+        }else if(NavigationDrawerFragment.Selection == selec)
+            NavigationDrawerFragment.Selection=selec;
+        NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection);
     }
 }
