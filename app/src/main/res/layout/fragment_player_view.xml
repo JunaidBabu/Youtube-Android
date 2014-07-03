@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/nextvideo"
             android:layout_width="fill_parent"
-            android:text="Next Video in 5 seconds"
+            android:text=""
             android:textColor="#fff"
             android:layout_height="fill_parent" />
         </LinearLayout>
