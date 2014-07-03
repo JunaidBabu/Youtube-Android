@@ -141,6 +141,13 @@ public class NavigationDrawerFragment extends Fragment {
 
 
                 try {
+                    for(int k=0; k<result.getJSONObject("feed").getJSONArray("link").length(); k++){
+                        if(result.getJSONObject("feed").getJSONArray("link").getJSONObject(k).getString("rel").equals("next")) {
+                            PlayerView.NextURL = result.getJSONObject("feed").getJSONArray("link").getJSONObject(k).getString("href");
+                            Log.e("Next url", PlayerView.NextURL);
+                        }
+                    }
+
                     for(int i = 0; i< result.getJSONObject("feed").getJSONArray("entry").length(); i++){
                         title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
                         String url=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONArray("link").getJSONObject(0).getString("href");
@@ -178,6 +185,8 @@ public class NavigationDrawerFragment extends Fragment {
         PlayerView.NotifText.setText(vc.get(pos).getTitle());
         PlayerView.mVideoView.requestFocus();
         NowPlaying=pos;
+        //Selection=pos;
+        PlayerView.setSelection(pos);
         //MainVideoActivity.NowPlaying = pos;
         //Toast(MainVideoActivity.VCC.get(MainVideoActivity.NowSelected).get(MainVideoActivity.NowPlaying).getTitle());
 
