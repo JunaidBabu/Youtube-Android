@@ -99,10 +99,7 @@ public class MainActivity extends ActionBarActivity implements UndoBarController
 //            startActivity(new Intent(this, YouTube.class));
           //  startActivity(new Intent(this, PlayerControlsDemoActivity.class));
             return true;
-        }else if (id == R.id.action_videoview){
-            startActivity(new Intent(this, VideoViewActivity.class));
-        }else if (id == R.id.action_videoview2){
-            startActivity(new Intent(this, VideoViewActivity2.class));
+
         }else if(id == R.id.action_webview){
             startActivity(new Intent(this, WebViewActivity.class));
         }
