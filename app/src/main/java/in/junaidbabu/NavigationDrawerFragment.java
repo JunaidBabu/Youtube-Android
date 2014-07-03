@@ -65,7 +65,7 @@ public class NavigationDrawerFragment extends Fragment {
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private DrawerLayout mDrawerLayout;
+    private static DrawerLayout mDrawerLayout;
     public static ListView mDrawerListView;
     private View mFragmentContainerView;
 
@@ -129,56 +129,58 @@ public class NavigationDrawerFragment extends Fragment {
             public void gotResult(String s) {
                 //ListView lv = (ListView) findViewById(R.id.listView4);
                // ListPop(mDrawerListView, s);
-
-                JSONObject result= null;
-                try {
-                    result = new JSONObject(s);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Log.i("json", result.toString());
-                String title, id;
-
-
-                try {
-                    for(int k=0; k<result.getJSONObject("feed").getJSONArray("link").length(); k++){
-                        if(result.getJSONObject("feed").getJSONArray("link").getJSONObject(k).getString("rel").equals("next")) {
-                            PlayerView.NextURL = result.getJSONObject("feed").getJSONArray("link").getJSONObject(k).getString("href");
-                            Log.e("Next url", PlayerView.NextURL);
-                        }
-                    }
-
-                    for(int i = 0; i< result.getJSONObject("feed").getJSONArray("entry").length(); i++){
-                        title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
-                        String url=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONArray("link").getJSONObject(0).getString("href");
-                        id = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-                        VC.add(new VideoClass(context, id, title, "http://img.youtube.com/vi/" + id + "/default.jpg"));
-                        VC.get(i).parseLongUrl();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // v = (ListView) findViewById(R.id.listView);
-
-                CustomList adapter = new
-                        CustomList(getActionBar().getThemedContext(), VC);
-                mDrawerListView.setAdapter(adapter);
-
-                mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                       // MainVideoActivity.NowSelected=Pid;
-                       startPlayback(VC, i);
-                        mDrawerLayout.closeDrawer(Gravity.LEFT);
-                       // finish();
-                    }
-                });
-            }
-
-
+                Listpopulate(s);
+               }
         },  "https://gdata.youtube.com/feeds/api/videos/-/"+ChannelActivity.channel+"?alt=json");
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
+    }
+
+    public static void Listpopulate(String s) {
+        JSONObject result= null;
+        try {
+            result = new JSONObject(s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i("json", result.toString());
+        String title, id;
+
+
+        try {
+            for(int k=0; k<result.getJSONObject("feed").getJSONArray("link").length(); k++){
+                if(result.getJSONObject("feed").getJSONArray("link").getJSONObject(k).getString("rel").equals("next")) {
+                    PlayerView.NextURL = result.getJSONObject("feed").getJSONArray("link").getJSONObject(k).getString("href");
+                    Log.e("Next url", PlayerView.NextURL);
+                }
+            }
+
+            for(int i = 0; i< result.getJSONObject("feed").getJSONArray("entry").length(); i++){
+                title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
+                String url=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONArray("link").getJSONObject(0).getString("href");
+                id = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
+                VC.add(new VideoClass(context, id, title, "http://img.youtube.com/vi/" + id + "/default.jpg"));
+                VC.get(i).parseLongUrl();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // v = (ListView) findViewById(R.id.listView);
+
+        CustomList adapter = new
+                CustomList(context, VC);
+        mDrawerListView.setAdapter(adapter);
+        mDrawerListView.setSelection(Selection);
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                // MainVideoActivity.NowSelected=Pid;
+                startPlayback(VC, i);
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                // finish();
+            }
+        });
+
     }
 
     public static void startPlayback(List<VideoClass> vc, final int pos) {
