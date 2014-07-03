@@ -2,6 +2,9 @@ package in.junaidbabu;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +32,23 @@ public class ChannelActivity extends Activity implements View.OnClickListener{
             if (v instanceof ViewGroup) {
                 setAllButtonListener((ViewGroup) v);
             } else if (v instanceof Button) {
+
                 v.setOnClickListener(this);
+                Drawable focus = (v.getBackground());
+
+                StateListDrawable states = new StateListDrawable();
+                states.addState(new int[] {android.R.attr.state_pressed},
+                        focus);
+               focus.setAlpha(100);
+                states.addState(new int[] {android.R.attr.state_focused},
+                        focus);
+                states.addState(new int[] { },
+                        v.getBackground());
+                v.setBackground(states);
+                v.setPadding(0, 110, 0, 0);
+                ((Button) v).setTextColor(Color.WHITE);
+
+
             }
         }
     }
