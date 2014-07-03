@@ -175,6 +175,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     public static void startPlayback(List<VideoClass> vc, final int pos) {
+        PlayerView.NotifText.setText(vc.get(pos).getTitle());
         PlayerView.mVideoView.requestFocus();
         NowPlaying=pos;
         //MainVideoActivity.NowPlaying = pos;
