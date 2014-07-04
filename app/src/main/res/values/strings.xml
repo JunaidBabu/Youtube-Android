@@ -10,7 +10,7 @@
     <string name="title_activity_web_view">WebView</string>
     <string name="title_activity_main_video">MainVideoActivity</string>
     <string name="title_activity_playlist">PlaylistActivity</string>
-    <string name="serverip">http://192.168.11.94:5000/</string>
+    <string name="serverip">http://192.168.11.94:5000/v/</string>
     <string name="title_activity_horizontal_list">HorizontalList</string>
     <string name="title_activity_compare">CompareActivity</string>
     <string name="title_activity_channel">ChannelActivity</string>
