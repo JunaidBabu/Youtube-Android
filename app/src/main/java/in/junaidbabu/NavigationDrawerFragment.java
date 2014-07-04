@@ -131,6 +131,10 @@ public class NavigationDrawerFragment extends Fragment {
                 //ListView lv = (ListView) findViewById(R.id.listView4);
                // ListPop(mDrawerListView, s);
                 Listpopulate(s);
+                startPlayback(VC, 0);
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                }
                }
         },  "https://gdata.youtube.com/feeds/api/videos/-/"+ChannelActivity.channel+"?alt=json");
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -160,8 +164,9 @@ public class NavigationDrawerFragment extends Fragment {
                 title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
                 String url=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONArray("link").getJSONObject(0).getString("href");
                 id = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-                VC.add(new VideoClass(context, id, title, "http://img.youtube.com/vi/" + id + "/default.jpg"));
-                VC.get(i).parseLongUrl();
+                VideoClass newitem = new VideoClass(context, id, title, "http://img.youtube.com/vi/" + id + "/default.jpg");
+                VC.add(newitem);
+                newitem.parseLongUrl();
             }
         } catch (JSONException e) {
             e.printStackTrace();
