@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import mysc.CustomVideoView;
 import mysc.GetUserReco;
@@ -211,7 +211,7 @@ public class PlayerView extends FragmentActivity
             }
             case 21: //left
             {
-                Toast.makeText(this, "Current selection " + NavigationDrawerFragment.Selection + "", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Current selection " + NavigationDrawerFragment.Selection + "", Toast.LENGTH_LONG).show();
 
                 mVideoView.seekTo(mVideoView.getCurrentPosition()-10000);
                 //Toast.makeText(this, mVideoView.getCurrentPosition()+"", Toast.LENGTH_SHORT).show();
@@ -256,7 +256,9 @@ public class PlayerView extends FragmentActivity
             }
             case 4: //back
             {
-              //  startActivity(new Intent(this, ChannelActivity.class));
+                finish();
+                startActivity(new Intent(this, ChannelActivity.class));
+                return true;
                // finish();
                // return true;
             }
@@ -272,7 +274,7 @@ public class PlayerView extends FragmentActivity
         NavigationDrawerFragment.mDrawerListView.setSelection(NavigationDrawerFragment.Selection);
 
         if(NavigationDrawerFragment.VC.size()-selec < 5){
-            Toast.makeText(NavigationDrawerFragment.context, "Should load more now", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(NavigationDrawerFragment.context, "Should load more now", Toast.LENGTH_SHORT).show();
             if(flag==0){
                 flag=1;
             new GetUserReco(new GetUserReco.AsyncResult() {
