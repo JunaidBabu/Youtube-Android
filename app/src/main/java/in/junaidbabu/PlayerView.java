@@ -256,7 +256,7 @@ public class PlayerView extends FragmentActivity
             }
             case 4: //back
             {
-                finish();
+                //finish();
                 startActivity(new Intent(this, ChannelActivity.class));
                 return true;
                // finish();

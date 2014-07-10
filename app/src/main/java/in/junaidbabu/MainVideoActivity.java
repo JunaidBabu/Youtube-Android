@@ -29,9 +29,15 @@ public class MainVideoActivity extends Activity {
     WebView mWebView;
     private MediaController mController;
     //MediaMetadataRetriever mMetadataRetriever;
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
     @ Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        //super.onCreate(savedInstanceState);
+        //super.onSaveInstanceState(savedInstanceState);
         setContentView(R.layout.activity_main_video);
         getActionBar().hide();
         SharedPreferences status = getSharedPreferences("TOKEN", 0);

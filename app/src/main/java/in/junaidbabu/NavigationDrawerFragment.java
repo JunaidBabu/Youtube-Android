@@ -131,7 +131,7 @@ public class NavigationDrawerFragment extends Fragment {
                 //ListView lv = (ListView) findViewById(R.id.listView4);
                // ListPop(mDrawerListView, s);
                 Listpopulate(s);
-                startPlayback(VC, 0);
+                //startPlayback(VC, 0);
                 if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
                 }
@@ -164,9 +164,18 @@ public class NavigationDrawerFragment extends Fragment {
                 title = (result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONObject("title").getString("$t"));
                 String url=result.getJSONObject("feed").getJSONArray("entry").getJSONObject(i).getJSONArray("link").getJSONObject(0).getString("href");
                 id = url.substring(url.indexOf("=") + 1, url.indexOf("&"));
-                VideoClass newitem = new VideoClass(context, id, title, "http://img.youtube.com/vi/" + id + "/default.jpg");
+                final VideoClass newitem = new VideoClass(context, id, title, "http://img.youtube.com/vi/" + id + "/default.jpg");
                 VC.add(newitem);
-                newitem.parseLongUrl();
+                if(VC.size()==1)
+                    startPlayback(VC, 0);
+                new Thread()
+                {
+                    @Override
+                    public void run() {
+                        newitem.parseLongUrl();
+                    }
+                }.start();
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -202,7 +211,6 @@ public class NavigationDrawerFragment extends Fragment {
             GetUserReco.AsyncResult url = new GetUserReco.AsyncResult() {
                 @Override
                 public void gotResult(String s) {
-
                     PlayerView.mVideoView.setVideoURI(Uri.parse(s));
                     VC.get(pos).setLongUrl(s);
                     PlayerView.mVideoView.start();

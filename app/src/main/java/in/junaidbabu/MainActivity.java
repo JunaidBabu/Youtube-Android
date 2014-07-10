@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity implements UndoBarController
         Intent googlePicker = AccountPicker.newChooseAccountIntent(null, null,
                 new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null) ;
         //startActivityForResult(googlePicker,PICK_ACCOUNT_REQUEST);
-        getTask((MainActivity) mContext, "junaidvayoli@gmail.com", Scope).execute();
+        //getTask((MainActivity) mContext, "junaidvayoli@gmail.com", Scope).execute();
     }
 
     @Override

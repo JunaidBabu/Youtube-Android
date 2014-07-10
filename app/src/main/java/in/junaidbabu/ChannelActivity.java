@@ -21,7 +21,7 @@ public class ChannelActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gridlayout);
-
+//        getWindow().setBackgroundDrawable(new ColorDrawable(0));
         GridView gridView = (GridView) findViewById(R.id.grid_view);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
