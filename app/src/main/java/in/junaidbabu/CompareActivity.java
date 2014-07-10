@@ -2,6 +2,7 @@ package in.junaidbabu;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +20,8 @@ public class CompareActivity extends YouTubeBaseActivity {
     YouTubePlayer player;
     CustomVideoView video;
     TextView t1,t2, LT;
-    String url="https://r1---sn-nvoxu-ioql.googlevideo.com/videoplayback?mv=m&sver=3&requiressl=yes&mt=1404887139&id=o-AKAQ_2k3nJl5HSuce_w0z947gT7fIQMZ1livnDohbstp&upn=Ieb-vnPsYx8&expire=1404910800&ipbits=0&ratebypass=yes&gcr=jp&ms=au&mws=yes&itag=22&key=yt5&source=youtube&sparams=gcr%2Cid%2Cip%2Cipbits%2Citag%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&ip=182.171.224.146&fexp=902408%2C924213%2C924217%2C924222%2C930008%2C934024%2C934030&signature=8966A8106CD388F8BDA01F2D7C09261C98BFA2EF.DCCCF8514455D942DCE3B62DD443EC7B56B223C3";
-    String vid="k4V3Mo61fJM";
+    String url="https://r2---sn-nvoxu-ioqz.googlevideo.com/videoplayback?signature=C65E5457FC2BC450EAABC1739D4A1CF316797D64.1A75D961E3A7A06AE9BBB2C7FA6182B17FF62107&key=yt5&id=o-AAIWEYxKGhboDcIWWe1m9VuqSvu2bdWtbZvEwo1gJ1PS&fexp=900225%2C902408%2C902411%2C924213%2C924217%2C924222%2C930008%2C934024%2C934030%2C936927%2C939951%2C940647&ms=au&ipbits=0&mws=yes&mv=m&ratebypass=yes&sver=3&requiressl=yes&sparams=gcr%2Cid%2Cip%2Cipbits%2Citag%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&ip=182.171.224.146&upn=nOeXucesPws&itag=18&expire=1405000800&mt=1404976101&gcr=jp&source=youtube";
+    String vid="uh8y-K-xC-E";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +96,8 @@ public class CompareActivity extends YouTubeBaseActivity {
 
 
 
+
+
     }
 
     public void start(View v){
@@ -102,8 +105,23 @@ public class CompareActivity extends YouTubeBaseActivity {
         player.play();
         video.start();
 
+        final Handler handler = new Handler();
 
 
+//        handler.post( new Runnable(){
+//
+//            public void run() {
+//                while (1==1) {
+//                    try {
+//                        sleep(500);
+//                        t1.setText(String.valueOf((float) player.getCurrentTimeMillis() / 1000));
+//                        t2.setText(String.valueOf((float) video.getCurrentPosition() / 1000));
+//                        LT.setText(String.valueOf((float) video.getCurrentPosition() / 1000 - (float) player.getCurrentTimeMillis() / 1000));
+//                    } catch (Exception e) {
+//                    }
+//                }
+//            }
+//        });
 
     }
 
@@ -117,12 +135,13 @@ public class CompareActivity extends YouTubeBaseActivity {
     public void stop(View v){
         t1.setText(String.valueOf((float)player.getCurrentTimeMillis()/1000));
         t2.setText(String.valueOf((float) video.getCurrentPosition() / 1000));
-        LT.setText(String.valueOf((float) video.getCurrentPosition() / 1000 - (float)player.getCurrentTimeMillis()/1000));
+        LT.setText("Difference: "+ String.format("%.2f", (float) video.getCurrentPosition() / 1000 - (float)player.getCurrentTimeMillis()/1000)+" seconds");
         player.pause();
         video.pause();
 
     }
     public void reset(View v){
+        video.seekTo(0);
         video.stopPlayback();
         video.setVideoURI(Uri.parse(""));
         video.setVideoURI(Uri.parse(url));
@@ -130,6 +149,8 @@ public class CompareActivity extends YouTubeBaseActivity {
         player.cueVideo(vid);
         //player.play();
         video.start();
+
+
     }
 }
 
